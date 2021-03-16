@@ -64,8 +64,14 @@ article {
 
 .result_image{
     margin: 0 auto;
+    margin-top: 10px;
+    margin-bottom: 30px;
 }
 .start{
+    font-family: 'Black Han Sans', sans-serif;
+}
+
+.result{
     font-family: 'Black Han Sans', sans-serif;
 }
 
@@ -87,7 +93,7 @@ article {
     width: 100%;
     height: 60px;
     font-family: 'Noto Sans KR', sans-serif;
-    font-size: 20px;
+    font-size: 18px;
     border-radius: 30px;
 }
 
