@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MBTI test</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+    <link rel="stylesheet" href="index.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Black+Han+Sans&display=swap');
+        @import url('https://fonts.googleapis.com/earlyaccess/nanumgothic.css');
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
+    </style>
+
+</head>
+
+<body class="container">
+    <div class="intro-wrap">
+        <article class="start">
+        <h1 class="mt-5 text-center">나의 MBTI<br/>동물유형은?</h1>
+        <div class="img-wrap">
+            <img src="hello.png" width="300px" height="300px"/>
+        </div>
+        <div class="btn-wrap">
+            <button type="button" class="start_button" onclick="start();">테스트 시작하기</button>
+        </div>
+
+        <div class="by">
+            made by. Myeongwooni<br/>
+            uriuni17@ajou.ac.kr
+        </div>
+        </article>
+    </div>
+
+    <div class="question_wrap">
+        <article class="question">
+            <div class="progress mt-5">
+                <div class="progress-bar bg-success" role="progressbar" style="width: 0" ></div>
+            </div>
+            <h2 id="title" class="text-center mt-5">문제</h2>
+            <input id="type" type="hidden" value="EI">
+            <button id="A" type="button" class="question_button">Primary</button>
+            <button id="B" type="button" class="question_button">Primary</button>
+        </article>
+    </div>
+
+    <div class="result_wrap">
+        <article class="result">
+            <!-- <h2 id="animal" class="text-center mt-5">동물 이름</h2> -->
+            <img id="image" src="" class="result_image" alt="animal" width="300px">
+            <!-- <h3 id="explain" class="text-center mt-5">설명</h3> -->
+            <!-- Go to www.addthis.com/dashboard to customize your tools -->
+            <!-- <div class="addthis_inline_share_toolbox"></div> -->
+        </article>
+    </div>
+
+    <article class="kakao_ad mt-5">
+        <!-- <ins class="kakao_ad_area" style="display:none;" 
+        data-ad-unit    = "DAN-eHfVkNMMjTKeERyZ" 
+        data-ad-width   = "320" 
+        data-ad-height  = "100"></ins>  -->
+        <script type="text/javascript" src="//t1.daumcdn.net/kas/static/ba.min.js" async></script>
+        <input type="hidden" id="EI" value="0">
+        <input type="hidden" id="SN" value="0">
+        <input type="hidden" id="TF" value="0">
+        <input type="hidden" id="JP" value="0">
+
+
+    </article>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+    
+    <script>
+
+        var num = 1;
+
+        var q = {
+            1: {"title": "스트레스 폭발!<br/>나의 선택은?", 
+                "type": "EI", "A": "다 모여! 친구들과 함께 놀면서 스트레스를 푼다.", "B": "방콕! 집에서 혼자 시간을 보낸다."},
+            2: {"title": "친구들과 만났을때<br/>나의 모습은", 
+                "type": "EI", "A": "대화를 주도하며 분위기를 이끈다.", "B": "친구들의 이야기를 들어준다."},
+            3: {"title": "이름만 아는 사람을<br/>우연히 마주쳤을때 나는", 
+                "type": "EI", "A": "먼저 인사를 건넨다.", "B": "모르는 척 지나간다."},
+            4: {"title": "친구가 맛집의 위치를<br/>물어볼때, 나는", 
+                "type": "SN", "A": "현재 위치로부터 식당까지 가는 법을 알려준다.", "B": "식당 옆의 큰 건물을 알려준다."},
+            5: {"title": "자기 전 친구/애인과<br/>통화에서 나는", 
+                "type": "SN", "A": "오늘 있었던 일을 얘기한다.", "B": "오늘 느꼈던 감정, 기분을 얘기한다."},
+            6: {"title": "\"영화 어땠어?\"<br/>친구가 물어볼 때 나는", 
+                "type": "SN", "A": "주인공이 이렇고 저런데 어느날 이렇게 돼서 ...", "B": "재밌었어!(끝)"},
+            7: {"title": "친구가 차 사고 났다는<br/>소식을 듣고 나는", 
+                "type": "TF", "A": "보험은? 병원은 갔다 왔어? 누가 잘못했는데?", "B": "괜찮아???! 무슨 일이야?ㅠㅠㅠ"},
+            8: {"title": "다음 중 내가 더<br/>듣고 싶은 말은?", 
+                "type": "TF", "A": "역시 너랑 제일 말이 잘 통해!", "B": "넌 나에게 소중한 사람이야!"},
+            9: {"title": "마음에 드는 이상형과<br/>대화를 할 때 나는", 
+                "type": "TF", "A": "이것저것 궁금한 것을 물어본다.", "B": "이상형의 말에 풍부한 공감과 리액션을 해준다."},
+            10: {"title": "가기로 했던 식당이<br/>문을 닫았을때, 나는",
+                "type": "JP", "A": "다른 맛집을 검색해서 찾아본다.", "B": "맛있어 보이는 옆 식당에 간다."},
+            11: {"title": "마지막 날의 여행 일정을<br/> 아직 짜지 못한 나는", 
+                "type": "JP", "A": "틈틈히 미리 계획을 구상해둔다.", "B": "미루다 전날 잠들기 직전에 짠다."},
+            12: {"title": "2주 뒤 친구와의 약속을<br/> 잡을 때 나는", 
+                "type": "JP", "A": "언제 만날래? 어디서 만날래?", "B": "그 때 상황 보고 만나자!"}
+        }
+
+        var result = {
+            "ISTJ": {"animal": "호랑이", "image": "/tiger.jpg"},
+            "INTP": {"animal": "부엉이", "image": "/owl.jpg"},
+            "ENTJ": {"animal": "사자", "image": "/lion.jpg"},
+            "ENTP": {"animal": "여우", "image": "/fox.jpg"},
+            "INFJ": {"animal": "판다", "image": "/panda.jpg"},
+            "INFP": {"animal": "앵무새", "image": "/parrot.jpg"},
+            "ENFJ": {"animal": "코끼리", "image": "/elephant.jpg"},
+            "ENFP": {"animal": "원숭이", "image": "/monkey.jpg"},
+            "ISTJ": {"animal": "거북이", "image": "/turtle.jpg"},
+            "ISFJ": {"animal": "사슴", "image": "/deer.jpg"},
+            "ESTJ": {"animal": "늑대", "image": "/wolf.jpg"},
+            "ESFJ": {"animal": "말", "image": "/horse.jpg"},
+            "ISTP": {"animal": "곰", "image": "/bear.jpg"},
+            "ISFP": {"animal": "고양이", "image": "/cat.jpg"},
+            "ESTP": {"animal": "비버", "image": "/beaver.jpg"},
+            "INTP": {"animal": "돌고래", "image": "/owl.jpg"}
+        }
+
+        function start() {
+            $(".start").hide();
+            $(".question").show();
+            next();
+        }
+
+        $("#A").click(function(){
+            var type = $("#type").val();
+            var preValue = $("#"+type).val();
+            $("#"+type).val(parseInt(preValue)+1);
+            next();
+        });
+        
+        $("#B").click(function(){
+            next();
+        });
+
+        function next() {
+            if (num == 13){
+                $(".question").hide();
+                $(".result").show();
+                var mbti = "";
+                ($("#EI").val() < 2) ? mbti+="I" : mbti+="E";
+                ($("#SN").val() < 2) ? mbti+="N" : mbti+="S";
+                ($("#TF").val() < 2) ? mbti+="F" : mbti+="T";
+                ($("#JP").val() < 2) ? mbti+="P" : mbti+="J";
+                alert(mbti);
+                $("#image").attr("src", result[mbti]["image"]);
+                $("#animal").html(result[mbti]["animal"]);
+                $("#explain").html(result[mbti]["explain"]);
+            } else{
+            $(".progress-bar").attr('style', 'width: calc(100/12*'+num+'%)');
+            $("#title").html(q[num]["title"]);
+            $("#type").val(q[num]["type"]);
+            $("#A").html(q[num]["A"]);
+            $("#B").html(q[num]["B"]);
+            num++;}
+        }
+
+    </script>
+
+    <!-- Go to www.addthis.com/dashboard to customize your tools -->
+    <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-604f85d1bc10d833"></script>
+
+</body>
+</html>
